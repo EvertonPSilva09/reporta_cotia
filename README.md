@@ -12,22 +12,28 @@ Essa aplicação servirá não apenas como uma plataforma de denúncias, mas tam
 
 ## ⚙️ Configuração
 
-1. Crie o banco de dados:
+- Na raiz do projeto faça o seguinte:
+
+1. Instale as dependências
+   ```sh
+   bundle install
+
+2. Crie o banco de dados:
    ```sh
    rails db:create
   
-2. Execute as migrações:
+3. Execute as migrações:
    ```sh
    rails db:migrate
 
-3. Popule o banco de dados com dados iniciais:
+4. Popule o banco de dados com dados iniciais:
    ```sh
    rails db:seed
 
-4. Instale o Tailwind CSS:
+5. Instale o Tailwind CSS:
    ```sh
    rails tailwindcss:install
 
-5. Inicie o servidor Rais
+6. Inicie o servidor Rais
     ```sh
     rails s
