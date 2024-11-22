@@ -2,7 +2,7 @@
   <h1 class="text-2xl font-bold mb-5 text-center">Editar: <%= @report.title %></h1>
 
   <div class="bg-white shadow-md rounded-lg p-6 max-w-md mx-auto">
-    <%= form_with(model: @report, local: true) do |form| %>
+    <%= form_with(model: @report, local: true, html: { multipart: true }) do |form| %>
       <% if @report.errors.any? %>
         <div id="error_explanation" class="mb-4">
           <h2 class="text-red-500"><%= pluralize(@report.errors.count, "error") %> prohibited this report from being saved:</h2>
@@ -33,6 +33,26 @@
         <%= form.label :address_id, "Endereço", class: "block text-gray-700 font-bold mb-2" %>
         <%= form.collection_select :address_id, Address.all, :id, :street, {}, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
       </div>
+
+      <div class="mb-4">
+        <%= form.label :images, "Adicionar Fotos", class: "block text-gray-700 font-bold mb-2" %>
+        <%= form.file_field :images, multiple: true, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+      </div>
+
+      <% if @report.images.attached? %>
+        <div class="mb-4">
+          <h3 class="text-gray-700 font-bold mb-2">Fotos Existentes</h3>
+          <span class="text-xs mb-3"><i>Selecione as fotos que deseja</i><b class="text-red-600"> remover</b></span>
+          <div class="grid grid-cols-3 gap-4">
+            <% @report.images.each do |image| %>
+              <div class="relative">
+                <%= image_tag image.variant(resize_to_fill: [100, 100]), class: "w-full h-auto object-cover rounded" %>
+                <%= check_box_tag "report[remove_images][]", image.id, false, class: "absolute top-0 right-0 m-2" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
 
       <div class="flex items-center justify-between">
         <%= form.submit "Editar", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" %>
