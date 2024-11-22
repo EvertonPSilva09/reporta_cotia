@@ -7,7 +7,7 @@ Essa aplicação servirá não apenas como uma plataforma de denúncias, mas tam
 ## 📋 Requisitos
 
 - **Banco de Dados**: SQLite (temporariamente)
-- **Ruby**: 3.1.7
+- **Ruby**: 3.1.3
 - **Rails**: 7.0.8.6
 
 ## ⚙️ Configuração
