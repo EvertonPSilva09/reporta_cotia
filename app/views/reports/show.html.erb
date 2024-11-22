@@ -6,8 +6,49 @@
     <p class="text-gray-700 mb-2"><strong>Categoria:</strong> <%= @report.category.category %></p>
     <p class="text-gray-700 mb-2"><strong>Endereço:</strong> <%= @report.address.street %>, <%= @report.address.neighbhood %></p>
 
+    <% if @report.images.attached? %>
+      <div class="relative mt-4">
+        <div class="carousel">
+          <% @report.images.each_with_index do |image, index| %>
+            <div class="carousel-item <%= "active" if index == 0 %>">
+              <%= image_tag image.variant(resize_to_fill: [400, 300]), class: "w-full h-auto object-cover rounded" %>
+            </div>
+          <% end %>
+        </div>
+        <button class="prev absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white px-2 py-1 rounded">‹</button>
+        <button class="next absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white px-2 py-1 rounded">›</button>
+      </div>
+    <% end %>
+
     <div class="mt-4">
       <%= link_to "Voltar", reports_path, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" %>
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.querySelector('.carousel');
+    const items = carousel.querySelectorAll('.carousel-item');
+    const totalItems = items.length;
+    let currentIndex = 0;
+
+    function showItem(index) {
+      items.forEach((item, i) => {
+        item.classList.toggle('hidden', i !== index);
+      });
+    }
+
+    document.querySelector('.prev').addEventListener('click', function() {
+      currentIndex = (currentIndex > 0) ? currentIndex - 1 : totalItems - 1;
+      showItem(currentIndex);
+    });
+
+    document.querySelector('.next').addEventListener('click', function() {
+      currentIndex = (currentIndex + 1) % totalItems;
+      showItem(currentIndex);
+    });
+
+    showItem(currentIndex);
+  });
+</script>
