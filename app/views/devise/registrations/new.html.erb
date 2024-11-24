@@ -1,33 +1,33 @@
 <div class="container mx-auto">
   <div class="sm:mx-auto sm:w-full sm:max-w-md">
-    <h2 class="text-center text-3xl leading-9 font-extrabold text-gray-900">Sign up</h2>
+    <h2 class="text-center text-3xl leading-9 font-extrabold text-gray-900">Registre-se</h2>
   </div>
 
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
     <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "space-y-6" }) do |f| %>
         <div class="field">
-          <%= f.label :email, class: "block text-sm font-medium text-gray-700" %>
+          <%= f.label "Email", class: "block text-sm font-medium text-gray-700" %>
           <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
         </div>
 
       <div class="field">
-        <%= f.label :password, class: "block text-sm font-medium text-gray-700" %>
+        <%= f.label "Senha", class: "block text-sm font-medium text-gray-700" %>
         <%= f.password_field :password, autocomplete: "new-password", class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
       </div>
 
       <div class="field">
-        <%= f.label :password_confirmation, class: "block text-sm font-medium text-gray-700" %>
+        <%= f.label "Digite a senha novamente", class: "block text-sm font-medium text-gray-700" %>
         <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
       </div>
 
         <div class="field">
-        <%= f.label "Profile photo", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.label "Foto de Perfil", class: "block text-sm font-medium text-gray-700" %>
         <%= f.file_field :image, autofocus: true, autocomplete: "image", class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
       </div>
 
       <div class="actions">
-        <%= f.submit "Sign up", class: "w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+        <%= f.submit "Cadastrar", class: "w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
       </div>
     <% end %>
 
