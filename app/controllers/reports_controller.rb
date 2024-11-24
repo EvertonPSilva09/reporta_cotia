@@ -5,7 +5,18 @@ class ReportsController < ApplicationController
 
   def index
     @reports = Report.all
-    #render json: @reports
+
+    if params[:category_id].present?
+      @reports = @reports.where(category_id: params[:category_id])
+    end
+
+    if params[:address_id].present?
+      @reports = @reports.where(address_id: params[:address_id])
+    end
+
+    if params[:search].present?
+      @reports = @reports.where('title LIKE ? OR description LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%")
+    end
   end
 
   def show

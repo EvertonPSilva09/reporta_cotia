@@ -21,7 +21,7 @@
 
       <div class="mb-4">
         <%= form.label "Descrição", class: "block text-gray-700 font-bold mb-2" %>
-        <%= form.text_area :content, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+        <%= form.text_area :description, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
       </div>
 
       <div class="mb-4">
@@ -43,7 +43,7 @@
         <div class="mb-4">
           <h3 class="text-gray-700 font-bold mb-2">Fotos Existentes</h3>
           <span class="text-xs mb-3"><i>Selecione as fotos que deseja</i><b class="text-red-600"> remover</b></span>
-          <div class="grid grid-cols-3 gap-4">
+          <div class="grid grid-cols-3 gap-4 mt-2">
             <% @report.images.each do |image| %>
               <div class="relative">
                 <%= image_tag image.variant(resize_to_fill: [100, 100]), class: "w-full h-auto object-cover rounded" %>
