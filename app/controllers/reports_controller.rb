@@ -1,7 +1,7 @@
 class ReportsController < ApplicationController
-  before_action :authenticate_user!, except: %i[index show]
-  before_action :set_report, only: %i[show edit update destroy]
-  before_action :authorize_user!, only: %i[edit update destroy]
+  before_action :set_report, only: %i[show edit update destroy approve]
+  before_action :authorize_moderator, only: [:approve]
+  before_action :authorize_user!, only: %i[edit update]
 
   def index
     @reports = Report.all
@@ -63,6 +63,11 @@ class ReportsController < ApplicationController
     redirect_to reports_path, notice: 'Report was successfully deleted.'
   end
 
+  def approve
+    @report.update(approved: true)
+    redirect_to reports_path, notice: 'Report was successfully approved.'
+  end
+
   private
 
   def set_report
@@ -70,7 +75,7 @@ class ReportsController < ApplicationController
   end
 
   def authorize_user!
-    redirect_to reports_path, alert: 'You are not authorized to edit this report.' unless @report.user == current_user
+    redirect_to reports_path, alert: 'You are not authorized to edit this report.' unless @report.user == current_user || current_user.admin?
   end
 
   def report_params
