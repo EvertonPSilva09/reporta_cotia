@@ -1,0 +1,50 @@
+<div class="container mx-auto">
+  <h1 class="text-center text-3xl leading-9 font-extrabold text-gray-900 mb-5">Report(s) pendente(s) de aprovação</h1>
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white border border-gray-200">
+      <thead>
+        <tr>
+          <th class="py-2 px-4 border-b border-gray-200 text-left">Email</th>
+          <th class="py-2 px-4 border-b border-gray-200 text-left">Data de Criação</th>
+          <th class="py-2 px-4 border-b border-gray-200 text-left">Título</th>
+          <th class="py-2 px-4 border-b border-gray-200 text-left">Descrição</th>
+          <th class="py-2 px-4 border-b border-gray-200 text-left">Endereço</th>
+          <th class="py-2 px-4 border-b border-gray-200 text-left">Status</th>
+          <th class="py-2 px-4 border-b border-gray-200 text-left">Fotos</th>
+          <th class="py-2 px-4 border-b border-gray-200 text-left">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @reports.each do |report| %>
+          <tr class="hover:bg-gray-100">
+            <td class="py-2 px-4 border-b border-gray-200"><%= report.user.email %></td>
+            <td class="py-2 px-4 border-b border-gray-200"><%= report.created_at %></td>
+            <td class="py-2 px-4 border-b border-gray-200"><%= truncate(report.title, length: 25) %></td>
+            <td class="py-2 px-4 border-b border-gray-200"><%= truncate(report.description, length: 25) %></td>
+            <td class="py-2 px-4 border-b border-gray-200"><%= truncate(report.address.street, length: 25) %>, <%= truncate(report.address.neighbhood, length: 25) %></td>
+            <td class="py-2 px-4 border-b border-gray-200"><%= report.status %></td>
+            <td class="py-2 px-4 border-b border-gray-200">
+              <% if report.images.attached? %>
+                <div class="flex space-x-2">
+                  <% report.images.first(1).each do |image| %>
+                    <%= image_tag image, class: "w-16 h-16 object-cover" %>
+                  <% end %>
+                </div>
+              <% else %>
+                <span>-</span>
+              <% end %>
+            </td>
+            <td class="py-2 px-4 border-b border-gray-200">
+              <div class="flex flex-col space-y-2">
+                <%= link_to "Show", report_path(report), class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="mt-4">
+    <%= link_to "Voltar", root_path, class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full" %>
+  </div>
+</div>

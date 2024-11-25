@@ -1,0 +1,5 @@
+pt-BR:
+  report_status:
+    pending: "Pendente"
+    approved: "Aprovado"
+    rejected: "Rejeitado"
