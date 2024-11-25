@@ -15,6 +15,9 @@ Rails.application.routes.draw do
     member do
       patch :approve
     end
+    collection do
+      get :pending
+    end
   end
 
   devise_for :users, controllers: { registrations: 'users/registrations' }
