@@ -16,4 +16,16 @@ class Report < ApplicationRecord
 
   validates :title, :description, presence: true
   has_many_attached :images
+
+  enum status: { pending: 0, approved: 1, rejected: 2 }
+
+  after_initialize :set_default_status, if: :new_record?
+
+  def set_default_status
+    self.status ||= :pending
+  end
+
+  def translated_status
+    I18n.t("report_status.#{status}")
+  end
 end
