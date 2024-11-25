@@ -30,4 +30,7 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  report_status:
+    pending: "Pending"
+    approved: "Approved"
+    rejected: "Rejected"
