@@ -16,9 +16,10 @@ User.destroy_all
 # Create users
 puts "Criando usuários..."
 users = User.create([
-  { email: 'user1@example.com', password: 'password' },
-  { email: 'user2@example.com', password: 'password' },
-  { email: 'user3@example.com', password: 'password' }
+  { email: 'adm@example.com', password: 'password', role: :admin },
+  { email: 'moderator@example.com', password: 'password', role: :moderator },
+  { email: 'user3@example.com', password: 'password', role: :user },
+  { email: 'user4@example.com', password: 'password', role: :user }
 ])
 puts "Usuários criados: #{users.map(&:email).join(', ')}, a senha padrão é 'password'."
 
@@ -44,9 +45,9 @@ puts "Endereços criados: #{addresses.map { |a| "#{a.street}, #{a.city}" }.join(
 # Create reports and associate them with addresses, categories, and users
 puts "Criando relatórios..."
 reports = Report.create([
-  { title: 'Lâmpada queimada', description: 'Lâmpada do poste está queimada.', category: categories[0], address: addresses[0], user: users[0] },
-  { title: 'Buraco na rua', description: 'Há um buraco grande na rua.', category: categories[1], address: addresses[1], user: users[1] },
-  { title: 'Vazamento de esgoto', description: 'Esgoto vazando na calçada.', category: categories[2], address: addresses[2], user: users[2] }
+  { title: 'Lâmpada queimada', description: 'Lâmpada do poste está queimada.', category: categories[0], address: addresses[0], user: users[2], status: :approved },
+  { title: 'Buraco na rua', description: 'Há um buraco grande na rua.', category: categories[1], address: addresses[1], user: users[2] },
+  { title: 'Vazamento de esgoto', description: 'Esgoto vazando na calçada.', category: categories[2], address: addresses[2], user: users[3] }
 ])
 puts "Relatórios criados: #{reports.map(&:title).join(', ')}"
 
