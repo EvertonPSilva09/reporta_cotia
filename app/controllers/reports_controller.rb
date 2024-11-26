@@ -89,9 +89,8 @@ class ReportsController < ApplicationController
     redirect_to reports_path, notice: 'Report was successfully deleted.'
   end
 
-  def approve
-    @report.update(approved: true)
-    redirect_to reports_path, notice: 'Report was successfully approved.'
+  def new
+    @report = current_user.reports.build
   end
 
   private
