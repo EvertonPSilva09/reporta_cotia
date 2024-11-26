@@ -3,11 +3,11 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
 
   def authorize_admin
-    redirect_to root_path, alert: 'Not authorized' unless current_user.admin?
+    redirect_to(user_signed_in? ? (current_user.admin? ? root_path : root_path) : root_path, alert: 'Não Autorizado')
   end
 
   def authorize_moderator
-    redirect_to root_path, alert: 'Not authorized' unless current_user.moderator? || current_user.admin?
+    redirect_to(user_signed_in? ? (current_user.moderator? ? root_path : root_path) : root_path, alert: 'Não Autorizado')
   end
 
   def set_locale
