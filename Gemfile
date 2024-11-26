@@ -33,6 +33,9 @@ gem "jbuilder"
 #Devise for users
 gem 'devise'
 
+# Documentartion for API
+gem 'apipie-rails'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
