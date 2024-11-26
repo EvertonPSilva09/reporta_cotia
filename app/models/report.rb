@@ -19,6 +19,8 @@ class Report < ApplicationRecord
 
   enum status: { pending: 0, approved: 1, rejected: 2 }
 
+  scope :pending, -> { where(status: :pending) }
+
   after_initialize :set_default_status, if: :new_record?
 
   def set_default_status
@@ -27,5 +29,9 @@ class Report < ApplicationRecord
 
   def translated_status
     I18n.t("report_status.#{status}")
+  end
+
+  def self.pending_count
+    pending.count
   end
 end
