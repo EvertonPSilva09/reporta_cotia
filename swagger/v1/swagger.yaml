@@ -1,0 +1,102 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/reports":
+    get:
+      summary: Retrieves all reports
+      tags:
+      - Reports
+      parameters:
+      - name: category_id
+        in: query
+        description: Category ID
+        schema:
+          type: integer
+      - name: address_id
+        in: query
+        description: Address ID
+        schema:
+          type: integer
+      - name: search
+        in: query
+        description: Search term
+        schema:
+          type: string
+      responses:
+        '200':
+          description: reports found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    category_id:
+                      type: integer
+                    address_id:
+                      type: integer
+                    status:
+                      type: string
+                  required:
+                  - id
+                  - title
+                  - description
+                  - category_id
+                  - address_id
+                  - status
+  "/reports/{id}":
+    get:
+      summary: Retrieves a report
+      tags:
+      - Reports
+      parameters:
+      - name: id
+        in: path
+        description: Report ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: report found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  description:
+                    type: string
+                  category_id:
+                    type: integer
+                  address_id:
+                    type: integer
+                  status:
+                    type: string
+                required:
+                - id
+                - title
+                - description
+                - category_id
+                - address_id
+                - status
+        '404':
+          description: report not found
+servers:
+- url: {defaultHost}
+  variables:
+    defaultHost:
+      default: http://127.0.0.1:3000
