@@ -16,7 +16,7 @@
           <span class="self-center text-2xl font-semibold whitespace-nowrap text-black">Reporta Cotia</span>
         </a>
         
-        <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+        <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">            
           <% if user_signed_in? %>
             <% if current_user.image.attached? %>
               <%= image_tag(current_user.image, class: "rounded-full w-12 h-12") %>
@@ -33,6 +33,16 @@
       </div>
     </nav>
     <main class="container mx-auto mt-28 px-5 flex flex-col space-y-4">
+      <% if user_signed_in? && (current_user.admin? || current_user.moderator?) %>
+        <% pending_reports_count = Report.pending_count %>
+        <% if pending_reports_count > 0 %>
+          <div class="text-center bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4" role="alert">
+            <p class="font-bold">Atenção</p>
+            <p>Existem <%= pending_reports_count %> report(s) pendente(s) para análise.</p>
+            <p><%= link_to "Visualizar", pending_reports_path %></p>
+          </div>
+        <% end %>
+      <% end %>
       <p class="notice text-green-600"><%= notice %></p>
       <p class="alert text-red-600"><%= alert %></p>
       <%= yield %>

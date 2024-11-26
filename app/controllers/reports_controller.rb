@@ -69,7 +69,11 @@ class ReportsController < ApplicationController
   end
 
   def pending
-    @reports = Report.where(status: :pending)
+    if current_user.admin? || current_user.moderator?
+      @reports = Report.where(status: :pending)
+    else
+      redirect_to reports_path, alert: 'You are not authorized to view pending reports'
+    end
   end
 
   def approve
@@ -85,9 +89,8 @@ class ReportsController < ApplicationController
     redirect_to reports_path, notice: 'Report was successfully deleted.'
   end
 
-  def approve
-    @report.update(approved: true)
-    redirect_to reports_path, notice: 'Report was successfully approved.'
+  def new
+    @report = current_user.reports.build
   end
 
   private

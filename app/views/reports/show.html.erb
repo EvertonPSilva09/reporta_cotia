@@ -22,12 +22,12 @@
 
     <div class="relative mt-4 flex justify-center">
       <%= link_to "Voltar", reports_path, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" %>
-      <% if user_signed_in? %>
+      <% if user_signed_in? && (current_user.admin? || current_user.moderator?) %>
         <%= form_with(model: @report, url: report_path(@report), method: :patch, local: true, class: "flex items-center space-x-4") do |form| %>
           <%= form.submit "Atualizar status", class: "bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full" %>
           <%= form.select :status, Report.statuses.keys.map { |status| [status.humanize, status] }, {}, class: "block appearance-none bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" %>
         <% end %>
-        <% end %>
+      <% end %>
     </div>
   </div>
 </div>
