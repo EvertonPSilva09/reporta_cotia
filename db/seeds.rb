@@ -26,12 +26,12 @@ puts "Usuários criados: #{users.map(&:email).join(', ')}, a senha padrão é 'p
 # Create categories
 puts "Criando categorias..."
 categories = Category.create([
-  { category: 'Iluminação Pública' },
-  { category: 'Pavimentação' },
-  { category: 'Saneamento' },
-  { category: 'Segurança' }
+  { name: 'Iluminação Pública' },
+  { name: 'Pavimentação' },
+  { name: 'Saneamento' },
+  { name: 'Segurança' }
 ])
-puts "Categorias criadas: #{categories.map(&:category).join(', ')}"
+puts "Categorias criadas: #{categories.map(&:name).join(', ')}"
 
 # Create addresses
 puts "Criando endereços..."
