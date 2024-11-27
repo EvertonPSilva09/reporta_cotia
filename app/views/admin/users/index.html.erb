@@ -1,12 +1,12 @@
 <div class="container mx-auto">
-  <h1 class="text-center text-3xl leading-9 font-extrabold text-gray-900 mb-5">Gerenciar Regras de Perfis de Usuários</h1>
-  <div class="bg-white shadow-md rounded-lg p-6 max-w-md mx-auto">
+  <h1 class="text-center text-3xl leading-9 font-extrabold text-gray-900 mb-5">Gerenciar perfil de usuário</h1>
+  <div class="bg-white shadow-md rounded-lg p-6 max-w-xl mx-auto overflow-x-auto">
     <table class="min-w-full bg-white border border-gray-200">
       <thead>
         <tr>
           <th class="py-2 px-4 border-b border-gray-200 text-left">Email</th>
-          <th class="py-2 px-4 border-b border-gray-200 text-left">Role</th>
-          <th class="py-2 px-4 border-b border-gray-200 text-left">Actions</th>
+          <th class="py-2 px-4 border-b border-gray-200 text-left">Perfil</th>
+          <th class="py-2 px-4 border-b border-gray-200 text-left">Ações</th>
         </tr>
       </thead>
       <tbody>
@@ -15,7 +15,7 @@
             <td class="py-2 px-4 border-b border-gray-200"><%= user.email %></td>
             <td class="py-2 px-4 border-b border-gray-200"><%= user.role %></td>
             <td class="py-2 px-4 border-b border-gray-200">
-              <%= link_to "Edit", edit_admin_user_path(user), class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" %>
+              <%= link_to "Editar", edit_admin_user_path(user), class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" %>
             </td>
           </tr>
         <% end %>
