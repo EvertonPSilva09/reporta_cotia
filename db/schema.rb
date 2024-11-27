@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_24_035048) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_26_235209) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -49,8 +52,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_24_035048) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "audit_logs", id: :serial, force: :cascade do |t|
+    t.text "table_name", null: false
+    t.text "operation", null: false
+    t.jsonb "old_data"
+    t.jsonb "new_data"
+    t.datetime "created_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
+  end
+
   create_table "categories", force: :cascade do |t|
-    t.string "category"
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -58,11 +69,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_24_035048) do
   create_table "reports", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.integer "category_id", null: false
-    t.integer "address_id", null: false
+    t.bigint "category_id", null: false
+    t.bigint "address_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.integer "status"
     t.index ["address_id"], name: "index_reports_on_address_id"
     t.index ["category_id"], name: "index_reports_on_category_id"
