@@ -38,7 +38,7 @@ class ReportsController < ApplicationController
   def create
     @report = current_user.reports.build(report_params)
     if @report.save
-      redirect_to reports_path, notice: 'Report was successfully created and is pending approval.'
+      redirect_to reports_path, notice: 'Report criado com sucesso e está aguardando a aprovação da equipe de moderação.'
     else
       render :new
     end
@@ -62,7 +62,7 @@ class ReportsController < ApplicationController
           @report.images.attach(image)
         end
       end
-      redirect_to @report, notice: 'Report was successfully updated.'
+      redirect_to @report, notice: 'Report atualizado com sucesso.'
     else
       render :edit
     end
@@ -72,21 +72,21 @@ class ReportsController < ApplicationController
     if current_user.admin? || current_user.moderator?
       @reports = Report.where(status: :pending)
     else
-      redirect_to reports_path, alert: 'You are not authorized to view pending reports'
+      redirect_to reports_path, alert: 'Não atorizado'
     end
   end
 
   def approve
     if @report.approved!
-      redirect_to reports_path, notice: 'Report was successfully approved.'
+      redirect_to reports_path, notice: 'O report foi aprovado com sucesso.'
     else
-      redirect_to reports_path, alert: 'Failed to approve the report.'
+      redirect_to reports_path, alert: 'Falha na aprovação do report.'
     end
   end
 
   def destroy
     @report.destroy
-    redirect_to reports_path, notice: 'Report was successfully deleted.'
+    redirect_to reports_path, notice: 'O report foi deletado com sucesso.'
   end
 
   def new
@@ -100,12 +100,12 @@ class ReportsController < ApplicationController
   end
 
   def authorize_user!
-    redirect_to reports_path, alert: 'You are not authorized to edit this report.' unless @report.user == current_user || current_user.admin?
+    redirect_to reports_path, alert: 'Você não está autorizado a editar esse report.' unless @report.user == current_user || current_user.admin?
   end
 
   def authorize_view
     unless @report.approved? || @report.user == current_user || current_user.admin? || current_user.moderator?
-      redirect_to(root_path, alert: 'Not authorized')
+      redirect_to(root_path, alert: 'Não autorizado')
     end
   end
 
