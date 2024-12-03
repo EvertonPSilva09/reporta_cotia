@@ -20,7 +20,7 @@
               <h2 class="text-xl font-semibold mb-2 ml-3"><%= truncate(report.title, length: 25) %></h2>
             </div>
             <p class="text-gray-700 mb-2"><strong>Descrição:</strong> <%= truncate(report.description, length: 25) %></p>
-            <p class="text-gray-700 mb-2"><strong>Categoria:</strong> <%= truncate(report.category.name, length: 25) %></p>
+            <p class="text-gray-700 mb-2"><strong>Categoria:</strong> <%= truncate(I18n.t("category_name.#{report.category.name}"), length: 25) %></p>
             <p class="text-gray-700"><strong>Localização:</strong> <%= truncate(report.address.street, length: 25) %></p>
             <p class="text-gray-700"><strong>Status:</strong> <%= I18n.t("report_status.#{report.status}") %></p>
           </div>

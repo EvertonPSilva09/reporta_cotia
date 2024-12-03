@@ -26,19 +26,23 @@ puts "Usuários criados: #{users.map(&:email).join(', ')}, a senha padrão é 'p
 # Create categories
 puts "Criando categorias..."
 categories = Category.create([
-  { name: 'Iluminação Pública' },
-  { name: 'Pavimentação' },
-  { name: 'Saneamento' },
-  { name: 'Segurança' }
+  { name: 'basic_sanitation' },
+  { name: 'infraestructure' },
+  { name: 'paving' },
+  { name: 'public_safety' },
+  { name: 'street_lighting' }
 ])
 puts "Categorias criadas: #{categories.map(&:name).join(', ')}"
 
 # Create addresses
 puts "Criando endereços..."
 addresses = Address.create([
-  { cep: '12345-678', street: 'Rua A', neighbhood: 'Bairro A', city: 'Cidade A', number: '100' },
-  { cep: '23456-789', street: 'Rua B', neighbhood: 'Bairro B', city: 'Cidade B', number: '200' },
-  { cep: '34567-890', street: 'Rua C', neighbhood: 'Bairro C', city: 'Cidade C', number: '300' }
+  { cep: '06703445', street: 'Rua Azulão', neighbhood: 'Jardim Nova Coimbra', city: 'Cotia', number: '86' },
+  { cep: '06703420', street: 'Rua Avestruz', neighbhood: 'Jardim Nova Coimbra', city: 'Cotia', number: '21' },
+  { cep: '06703370', street: 'Rua Beija-Flor', neighbhood: 'Jardim Nova Coimbra', city: 'Cotia', number: '175' },
+  { cep: '06703190', street: 'Avenida Miguel Mirizola', neighbhood: 'Jardim Estela Mari', city: 'Cotia', number: '37' },
+  { cep: '06703220', street: 'Rua Calógero Mirizola', neighbhood: 'Jardim Estela Mari', city: 'Cotia', number: '57' },
+  { cep: '06703210', street: 'Rua Castanha', neighbhood: 'Jardim Estela Mari', city: 'Cotia', number: '156' }
 ])
 puts "Endereços criados: #{addresses.map { |a| "#{a.street}, #{a.city}" }.join('; ')}"
 
