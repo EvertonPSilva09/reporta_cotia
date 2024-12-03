@@ -4,6 +4,13 @@ pt-BR:
     approved: "Aprovado"
     rejected: "Rejeitado"
 
+  category_name:
+    basic_sanitation: "Saneamento Básico"
+    infraestructure: "Infraestrutura"
+    paving: "Pavimentação"
+    public_safety: "Segurança Pública"
+    street_lighting: "Iluminação Pública"
+
   devise:
     confirmations:
       confirmed: "Seu endereço de e-mail foi confirmado com sucesso."
