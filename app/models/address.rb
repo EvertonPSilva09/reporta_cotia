@@ -1,12 +1,16 @@
+# == Schema Information
 #
-# table name: addresses
-# t.string :cep
-# t.string :street
-# t.string :neighbhood
-# t.string :city
-# t.string :number
-# t.timestamps
-# 
+# Table name: addresses
+#
+#  id         :bigint           not null, primary key
+#  cep        :string
+#  street     :string
+#  neighbhood :string
+#  city       :string
+#  number     :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 class Address < ApplicationRecord
 
   validates :cep, :street, :neighbhood, :city, :number, presence: true
