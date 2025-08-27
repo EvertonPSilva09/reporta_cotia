@@ -4,27 +4,60 @@ class ReportsController < ApplicationController
   before_action :authorize_user!, only: %i[edit update]
 
   def index
-    if user_signed_in?
+    @reports = filtered_reports
+  end
+
+  def search
+    @reports = filtered_reports
+    render partial: 'reports/reports_list', locals: { reports: @reports }, formats: [:html]
+  end
+  # Método privado para filtrar reports conforme regras de permissão e busca
+  def filtered_reports
+    reports = if user_signed_in?
       if current_user.admin? || current_user.moderator?
-        @reports = Report.all
+        Report.all
       else
-        @reports = Report.where(status: :approved).or(Report.where(user: current_user))
+        Report.where(status: :approved).or(Report.where(user: current_user))
       end
     else
-      @reports = Report.where(status: :approved)
+      Report.where(status: :approved)
     end
 
     if params[:category_id].present?
-      @reports = @reports.where(category_id: params[:category_id])
+      reports = reports.where(category_id: params[:category_id])
     end
 
     if params[:address_id].present?
-      @reports = @reports.where(address_id: params[:address_id])
+      reports = reports.where(address_id: params[:address_id])
     end
 
     if params[:search].present?
-      @reports = @reports.where('title LIKE ? OR description LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%")
+      search_term = "%#{params[:search]}%"
+      reports = reports.left_joins(:category, :address)
+      arel = Report.arel_table
+      category_arel = Category.arel_table
+      address_arel = Address.arel_table
+      conditions = arel[:title].lower.matches(search_term.downcase)
+      conditions = conditions.or(arel[:description].lower.matches(search_term.downcase))
+      # Busca por nome da categoria traduzido e original
+      conditions = conditions.or(category_arel[:name].lower.matches(search_term.downcase))
+      Category.all.each do |cat|
+        if I18n.t("category_name.#{cat.name}").downcase.include?(params[:search].downcase)
+          conditions = conditions.or(arel[:category_id].eq(cat.id))
+        end
+      end
+      conditions = conditions.or(address_arel[:street].lower.matches(search_term.downcase))
+      conditions = conditions.or(address_arel[:neighbhood].lower.matches(search_term.downcase))
+      # Busca por status traduzido e original
+      Report.statuses.keys.each do |status|
+        if I18n.t("report_status.#{status}").downcase.include?(params[:search].downcase) || status.downcase.include?(params[:search].downcase)
+          conditions = conditions.or(arel[:status].eq(status))
+        end
+      end
+      reports = reports.where(conditions).distinct
     end
+    reports
+  end
   end
 
   def show
@@ -41,7 +74,6 @@ class ReportsController < ApplicationController
       redirect_to reports_path, notice: 'Report criado com sucesso e está aguardando a aprovação da equipe de moderação.'
     else
       render :new
-    end
   end
 
   def edit
