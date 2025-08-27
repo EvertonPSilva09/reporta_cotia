@@ -56,8 +56,8 @@ class ReportsController < ApplicationController
       end
       reports = reports.where(conditions).distinct
     end
+
     reports
-  end
   end
 
   def show
@@ -74,6 +74,7 @@ class ReportsController < ApplicationController
       redirect_to reports_path, notice: 'Report criado com sucesso e está aguardando a aprovação da equipe de moderação.'
     else
       render :new
+    end
   end
 
   def edit
@@ -104,7 +105,8 @@ class ReportsController < ApplicationController
     if current_user.admin? || current_user.moderator?
       @reports = Report.where(status: :pending)
     else
-      redirect_to reports_path, alert: 'Não atorizado'
+      redirect_to reports_path, alert: 'Não autorizado'
+      return
     end
   end
 
@@ -119,10 +121,6 @@ class ReportsController < ApplicationController
   def destroy
     @report.destroy
     redirect_to reports_path, notice: 'O report foi deletado com sucesso.'
-  end
-
-  def new
-    @report = current_user.reports.build
   end
 
   private
@@ -142,6 +140,7 @@ class ReportsController < ApplicationController
   end
 
   def report_params
-    params.require(:report).permit(:title, :description, :category_id, :address_id, :status, images:[], )
+    params.require(:report).permit(:title, :description, :category_id, :address_id, :status, images: [])
   end
+
 end
