@@ -1,33 +1,53 @@
+
 <div class="container mx-auto">
-  <h1 class="text-2xl font-bold mb-5 text-center"><%= @report.title %></h1>
-
-  <div class="bg-white shadow-md rounded-lg p-6">
-    <p class="text-gray-700 mb-2"><strong>Descrição:</strong> <%= @report.description %></p>
-    <p class="text-gray-700 mb-2"><strong>Categoria:</strong> <%= @report.category.name %></p>
-    <p class="text-gray-700 mb-2"><strong>Endereço:</strong> <%= @report.address.street %>, <%= @report.address.neighbhood %></p>
-
-    <% if @report.images.attached? %>
-      <div class="relative mt-4 flex justify-center">
-        <div class="carousel">
-          <% @report.images.each_with_index do |image, index| %>
-            <div class="carousel-item <%= "active" if index == 0 %>">
-              <%= image_tag image.variant(resize_to_fill: [400, 300]), class: "w-96 h-72 object-cover rounded cursor-pointer" %>
-            </div>
-          <% end %>
+  <div class="flex justify-center mt-8">
+    <div class="bg-white shadow-md rounded-lg p-6 w-full max-w-2xl h-auto flex flex-col justify-between">
+      <div>
+        <div class="flex items-center mb-2">
+          <div class="w-12 h-12 flex-shrink-0">
+            <% if @report.user.image.attached? %>
+              <%= image_tag @report.user.image, class: "rounded-full w-12 h-12" %>
+            <% else %>
+              <div class="rounded-full w-12 h-12 bg-gray-200"></div>
+            <% end %>
+          </div>
+          <h1 class="text-2xl font-bold mb-5 text-center ml-3"><%= @report.title %></h1>
         </div>
-        <button class="prev absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white px-2 py-1 rounded">‹</button>
-        <button class="next absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white px-2 py-1 rounded">›</button>
+        <p class="text-gray-700 mb-2"><strong>Descrição:</strong> <%= @report.description %></p>
+        <p class="text-gray-700 mb-2"><strong>Categoria:</strong> <%= I18n.t("category_name.#{@report.category.name}") %></p>
+        <p class="text-gray-700 mb-2"><strong>Endereço:</strong> <%= @report.address.street %>, <%= @report.address.neighbhood %></p>
+        <p class="text-gray-700"><strong>Status:</strong> <%= I18n.t("report_status.#{@report.status}") %></p>
       </div>
-    <% end %>
 
-    <div class="relative mt-4 flex justify-center">
-      <%= link_to "Voltar", reports_path, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" %>
-      <% if user_signed_in? && (current_user.admin? || current_user.moderator?) %>
-        <%= form_with(model: @report, url: report_path(@report), method: :patch, local: true, class: "flex items-center space-x-4") do |form| %>
-          <%= form.submit "Atualizar status", class: "cursor-pointer bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full" %>
-          <%= form.select :status, Report.statuses.keys.map { |status| [status.humanize, status] }, {}, class: "block appearance-none bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" %>
-        <% end %>
+      <% if @report.images.attached? %>
+        <div class="relative mt-4 flex justify-center">
+          <div class="carousel">
+            <% @report.images.each_with_index do |image, index| %>
+              <div class="carousel-item <%= "active" if index == 0 %>">
+                <%= image_tag image.variant(resize_to_fill: [400, 300]), class: "w-96 h-72 object-cover rounded cursor-pointer" %>
+              </div>
+            <% end %>
+          </div>
+          <button class="prev absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white px-2 py-1 rounded">‹</button>
+          <button class="next absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white px-2 py-1 rounded">›</button>
+        </div>
+      <% else %>
+        <div class="flex space-x-4 mt-4 h-24">
+          <div class="w-24 h-24 bg-gray-200 rounded"></div>
+          <div class="w-24 h-24 bg-gray-200 rounded"></div>
+          <div class="w-24 h-24 bg-gray-200 rounded"></div>
+        </div>
       <% end %>
+
+      <div class="relative mt-4 flex justify-center">
+        <%= link_to "Voltar", reports_path, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" %>
+        <% if user_signed_in? && (current_user.admin? || current_user.moderator?) %>
+          <%= form_with(model: @report, url: report_path(@report), method: :patch, local: true, class: "flex items-center space-x-4") do |form| %>
+            <%= form.submit "Atualizar status", class: "cursor-pointer bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full" %>
+            <%= form.select :status, Report.statuses.keys.map { |status| [status.humanize, status] }, {}, class: "block appearance-none bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" %>
+          <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
