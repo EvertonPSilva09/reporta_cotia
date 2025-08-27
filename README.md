@@ -18,22 +18,26 @@ Essa aplicação servirá não apenas como uma plataforma de denúncias, mas tam
    ```sh
    bundle install
 
-2. Crie o banco de dados:
+2. Instale o banco de dados via Docker
+   ```sh
+   docker-compose up -d
+
+3. Crie o banco de dados:
    ```sh
    rails db:create
   
-3. Execute as migrações:
+4. Execute as migrações:
    ```sh
    rails db:migrate
 
-4. Popule o banco de dados com dados iniciais:
+5. Popule o banco de dados com dados iniciais:
    ```sh
    rails db:seed
 
-5. Instale o Tailwind CSS:
+6. Instale o Tailwind CSS:
    ```sh
    rails tailwindcss:install
 
-6. Inicie o servidor Rais
+7. Inicie o servidor Rais
     ```sh
     rails s
