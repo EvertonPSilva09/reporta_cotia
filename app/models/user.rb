@@ -1,14 +1,17 @@
+# == Schema Information
 #
-# table name: users
-# t.string :email, default: "", null: false
-# t.string :encrypted_password, default: "", null: false
-# t.string :reset_password_token
-# t.datetime :reset_password_sent_at
-# t.datetime :remember_created_at
-# t.timestamps
-# t.index [:email], unique: true
-# t.index [:reset_password_token], unique: true
-# 
+# Table name: users
+#
+#  id                     :bigint           not null, primary key
+#  email                  :string           default(""), not null
+#  encrypted_password     :string           default(""), not null
+#  reset_password_token   :string
+#  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  role_id                :bigint
+#
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -18,13 +21,22 @@ class User < ApplicationRecord
   has_many :reports, dependent: :destroy
   has_one_attached :image
 
-  enum role: { user: 0, moderator: 1, admin: 2 }
+  belongs_to :role, class_name: 'User::Role', optional: true
 
   after_initialize :set_default_role, if: :new_record?
+
+
+  def admin?
+    role&.name == 'admin'
+  end
+
+  def moderator?
+    role&.name == 'moderator'
+  end
 
   private
 
   def set_default_role
-    self.role ||= :user
+    self.role ||= User::Role.find_by(name: 'user')
   end
 end
