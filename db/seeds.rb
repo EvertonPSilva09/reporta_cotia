@@ -13,13 +13,21 @@ Address.destroy_all
 Report.destroy_all
 User.destroy_all
 
+
+# Create roles
+puts "Criando roles..."
+roles = %w[user moderator admin].map do |role_name|
+  User::Role.find_or_create_by!(name: role_name)
+end
+role_hash = roles.index_by(&:name)
+
 # Create users
 puts "Criando usuários..."
-users = User.create([
-  { email: 'adm@example.com', password: 'password', role: :admin },
-  { email: 'moderator@example.com', password: 'password', role: :moderator },
-  { email: 'user3@example.com', password: 'password', role: :user },
-  { email: 'user4@example.com', password: 'password', role: :user }
+users = User.create!([
+  { email: 'adm@example.com', password: 'password', role: role_hash['admin'] },
+  { email: 'moderator@example.com', password: 'password', role: role_hash['moderator'] },
+  { email: 'user3@example.com', password: 'password', role: role_hash['user'] },
+  { email: 'user4@example.com', password: 'password', role: role_hash['user'] }
 ])
 puts "Usuários criados: #{users.map(&:email).join(', ')}, a senha padrão é 'password'."
 
