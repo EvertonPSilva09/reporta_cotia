@@ -33,8 +33,11 @@ gem "tailwindcss-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
-#Devise for users
+# Devise for users
 gem 'devise'
+
+# Annotate models with schema information
+gem 'annotate', '~> 3.2'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
