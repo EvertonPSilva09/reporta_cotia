@@ -1,0 +1,6 @@
+<% reports.each do |report| %>
+  <%= render partial: 'reports/report_card', locals: { report: report } %>
+<% end %>
+<% if reports.empty? %>
+  <div class="text-gray-500">Nenhum report encontrado.</div>
+<% end %>
