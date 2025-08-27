@@ -36,9 +36,6 @@ gem "jbuilder"
 # Devise for users
 gem 'devise'
 
-# Annotate models with schema information
-gem 'annotate', '~> 3.2'
-
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
@@ -75,6 +72,7 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
   gem "rspec-rails"
+  gem 'annotate'
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
